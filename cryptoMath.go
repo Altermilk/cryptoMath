@@ -4,7 +4,6 @@ import (
 	"math"
 	"strconv"
 	"math/rand"
-	"time"
 )
 
 func Gcd(a, b int) (d, x, y int) {
@@ -73,11 +72,10 @@ func Gamma(info, key [] byte) [] byte { // функция наложения г�
 	return result
   }
 
-func GetRandomSimpleNum() int{
-
-	rnd := rand.New(rand.NewSource(time.Now().Unix()))
+func GetRandomSimpleNum(rnd rand.Rand) int{
+	
 	num := rnd.Intn(len(SimpleNums))
-	return num
+	return SimpleNums[num]
 }
 
 var SimpleNums  = []int {2,	3,	5,	7,	11,	13,	17,	19,	23,	29,	31,	37,	41,	43,	47,	53,	59,	61,	67,	71,
