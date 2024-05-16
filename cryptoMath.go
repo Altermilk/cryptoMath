@@ -46,6 +46,24 @@ func Modularizate(a, x, p int) int{
 	return y
 }
 
+func Modularizate64(a, x, p uint64) uint64{
+	t := int(math.Floor(math.Log2(float64(x))))
+	xStr := strconv.FormatInt(int64(x), 2)
+	x0b := make([]int, t + 1)
+	for i := 0; i<t + 1; i++{
+		x0b[i], _ = strconv.Atoi(string(xStr[i]))
+	}
+	
+	var y uint64 = 1
+	for i:=0; i<t + 1; i++{
+		y = (y*y)%p
+		if(x0b[i] == 1){
+			y = (y*a)%p
+		}
+	}
+	return y
+}
+
 func Gamma(info, key [] byte) [] byte { // функция наложения гаммы
 	k := make([]byte, len(info))
 	j := 0
