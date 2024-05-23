@@ -24,6 +24,23 @@ func Gcd(a, b int) (d, x, y int) {
 	}
 }
 
+func GcdRunes(a, b rune) (d, x, y rune) {
+	if(b>a){
+		a, b = b, a
+	}
+	u := [3]rune{a, 1, 0}
+	v := [3]rune{b, 0, 1}
+	for {
+		if v[0] == 0 {
+			return u[0], u[1], u[2]
+		}
+		q := rune(u[0] / v[0])
+		t := [3]rune{u[0] % v[0], u[1] - q*v[1], u[2] - q*v[2]}
+		u = v
+		v = t
+	}
+}
+
 func Gcd64(a, b uint64) (d, x, y uint64) {
 	if(b>a){
 		a, b = b, a
@@ -49,6 +66,14 @@ func ModInv(c, m int) int{
 	return d
 }
 
+func ModInvRunes(c, m rune) rune{
+	_, _, d :=  GcdRunes(m, c)
+	if d<0 {
+		d += m
+	}
+	return d
+}
+
 func Modularizate(a, x, p int) int{
 	t := int(math.Floor(math.Log2(float64(x))))
 	xStr := strconv.FormatInt(int64(x), 2)
@@ -66,6 +91,23 @@ func Modularizate(a, x, p int) int{
 	}
 	return y
 }
+func ModularizateRune(a rune, x rune, p rune) rune {
+	t := int(math.Floor(math.Log2(float64(x))))
+	xStr := strconv.FormatInt(int64(x), 2)
+	x0b := make([]int, t + 1)
+	for i := 0; i < t+1; i++ {
+	  x0b[i], _ = strconv.Atoi(string(xStr[i]))
+	}
+  
+	y := rune(1)
+	for i := 0; i < t+1; i++ {
+	  y = (y * y) % p
+	  if x0b[i] == 1 {
+		y = (y * rune(a)) % p
+	  }
+	}
+	return y
+  }
 
 func Modularizate64(a, x, p uint64) uint64{
 	t := int(math.Floor(math.Log2(float64(x))))
