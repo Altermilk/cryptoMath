@@ -1,6 +1,7 @@
 package cryptoMath
 
 import (
+	"fmt"
 	"math"
 	"math/big"
 	"math/rand"
@@ -90,6 +91,27 @@ func Modularizate(a, x, p int) int{
 		}
 	}
 	return y
+}
+func ModularizateInfo(a, x, p int){
+	t := int(math.Floor(math.Log2(float64(x))))
+	fmt.Println("t = ", t,  " | math.Floor(math.Log2(float64(x)))")
+	xStr := strconv.FormatInt(int64(x), 2)
+	fmt.Println("X (", x, ")-> 0b = ",xStr )
+	x0b := make([]int, t + 1)
+	for i := 0; i<t + 1; i++{
+		x0b[i], _ = strconv.Atoi(string(xStr[i]))
+	}
+	fmt.Println(x0b)
+	y := 1
+	for i:=0; i<t + 1; i++{
+		y = (y*y)%p
+		fmt.Println("y = (y*y)mod p = ", y)
+		if(x0b[i] == 1){
+			y = (y*a)%p
+			fmt.Println("1 y = (y*a)mod p = ", y)
+		}
+	}
+	fmt.Println("---- Y = ", y)
 }
 func ModularizateRune(a int32, x int32, p int32) int32 {
 	t := int(math.Floor(math.Log2(float64(x))))
